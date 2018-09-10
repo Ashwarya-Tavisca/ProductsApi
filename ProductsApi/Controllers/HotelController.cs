@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer;
+using Newtonsoft.Json.Linq;
 using ProductsApi.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace ProductsApi.Controllers
 {
     public class HotelController : ApiController
     {
+        ProductsTableEntities obj = new ProductsTableEntities();
+        Hotel hotelProduct = new Hotel();
 
         [HttpGet]
         public IEnumerable<Hotel> displayHotel()
@@ -21,50 +24,72 @@ namespace ProductsApi.Controllers
                 return obj.Hotels.ToList();
             }
         }
-
-
         [HttpPost]
-        public void AddHotel([FromBody]Hotel HotelObject)
-
+        public void Post([FromBody]JObject jsonFormatInput)
         {
-            using (ProductsTableEntities productobject = new ProductsTableEntities())
-            {
-                var id = productobject.Hotels.Max(product => product.ProductId);
-                int maximumid = Int32.Parse(id.ToString());
-                maximumid += 1;
-                HotelObject.ProductId = maximumid;
-                productobject.Hotels.Add(HotelObject);
-                productobject.SaveChanges();
-            }
-
+            obj.Hotels.Add(jsonFormatInput.ToObject<Hotel>());
+            obj.SaveChanges();
         }
 
         [HttpPut]
-        public void book([FromBody]Item item)
+        [Route("api/Hotel/Book/{id}")]
+        public void Book([FromUri] int id)
         {
-            using (ProductsTableEntities obj = new ProductsTableEntities())
+
+            hotelProduct = obj.Hotels.Find(id);
+            hotelProduct.IsBooked = "true";
+            obj.SaveChanges();
+        }
+
+
+        [HttpPut]
+        [Route("api/Hotel/Save/{id}")]
+        public void Save([FromUri] int id)
+        {
+            hotelProduct = obj.Hotels.Find(id);
+            hotelProduct.IsSaved = "true";
+            obj.SaveChanges();
+        }
+
+        [HttpGet]
+        [Route("api/Hotel/GetSavedItems")]
+        public IEnumerable<Hotel> GetSavedItems()
+        {
+            IEnumerable<Hotel> enumerable = displayHotel();
+            List<Hotel> hotelItems = enumerable.ToList();
+            List< Hotel> hotelSavedItems = new List<Hotel>();
+
+            for (int i = 0; i < hotelItems.Count; i++)
             {
-                if (item.type == "book")
+                hotelProduct = hotelItems[i];
+                if (hotelProduct.IsSaved == "true")
                 {
-                    var refobj = obj.Hotels.Find(item.id);
-                    string IsBooked = obj.Hotels.Find(item.id).IsBooked;
-                    IsBooked = "true";
-
-                    refobj.IsBooked = IsBooked;
-
-                    obj.SaveChanges();
-                }
-                else
-                {
-                    var refobj = obj.Hotels.Find(item.id);
-                    string IsSaved = obj.Hotels.Find(item.id).IsSaved;
-                    IsSaved = "true";
-
-                    refobj.IsSaved = IsSaved;
-
-                    obj.SaveChanges();
+                    hotelSavedItems.Add(hotelProduct);
                 }
             }
+            return hotelSavedItems;
         }
+
+
+        [HttpGet]
+        [Route("api/Hotel/GetBookedItems")]
+        public IEnumerable<Hotel> GetBookedItems()
+        {
+            IEnumerable<Hotel> enumerable = displayHotel();
+            List<Hotel> hotelItems = enumerable.ToList();
+            List<Hotel> hotelBookedItems = new List<Hotel>();
+
+            for (int i = 0; i < hotelItems.Count; i++)
+            {
+                hotelProduct = hotelItems[i];
+                if (hotelProduct.IsBooked == "true")
+                {
+                    hotelBookedItems.Add(hotelProduct);
+                }
+            }
+            return hotelBookedItems;
+        }
+
+      
     }
 }

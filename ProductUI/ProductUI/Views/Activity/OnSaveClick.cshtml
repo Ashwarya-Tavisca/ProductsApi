@@ -1,0 +1,63 @@
+﻿@model IEnumerable<ProductUI.Models.ActivityProduct>
+
+@{
+    ViewBag.Title = "OnSaveClick";
+}
+
+<h2>OnSaveClick</h2>
+
+<table class="table">
+    <tr>
+      
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActivityType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsBooked)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsSaved)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+     
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActivityType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsBooked)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsSaved)
+        </td>
+        <td>
+            @Html.ActionLink("Book", "OnBookClick", new { @productId = item.ProductId }) |
+            @Html.ActionLink("Save", "OnSaveClick", new { @productId = item.ProductId })
+        </td>
+    </tr>
+}
+
+</table>
+@if (ViewData["CantSave"] != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("Cant Save");
+        };
+    </script>
+}

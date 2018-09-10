@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer;
+using Newtonsoft.Json.Linq;
 using ProductsApi.Models;
 using System;
 using System.Collections.Generic;
@@ -7,10 +8,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace ProductsApi.Controllers
+namespace ProductsApi.Controllers 
 {
     public class ActivityController : ApiController
     {
+        ProductsTableEntities obj = new ProductsTableEntities();
+        Activity activityProduct = new Activity();
         [HttpGet]
         public IEnumerable<Activity> displayActivity()
         {
@@ -20,49 +23,70 @@ namespace ProductsApi.Controllers
                 return obj.Activities.ToList();
             }
         }
-
         [HttpPost]
-        public void AddActivityProduct([FromBody]Activity activityObject)
-
+        public void Post([FromBody]JObject jsonFormatInput)
         {
-            using (ProductsTableEntities productobject = new ProductsTableEntities())
-            {
-                var id = productobject.Activities.Max(product => product.ProductId);
-                int maximumid = Int32.Parse(id.ToString());
-                maximumid += 1;
-                activityObject.ProductId = maximumid;
-                productobject.Activities.Add(activityObject);
-                productobject.SaveChanges();
-            }
-
+            obj.Activities.Add(jsonFormatInput.ToObject<Activity>());
+            obj.SaveChanges();
         }
 
         [HttpPut]
-        public void book([FromBody]Item item)
+        [Route("api/Activity/Book/{id}")]
+        public void Book([FromUri] int id)
         {
-            using (ProductsTableEntities obj = new ProductsTableEntities())
+
+            activityProduct = obj.Activities.Find(id);
+            activityProduct.IsBooked = "true";
+            obj.SaveChanges();
+        }
+
+
+        [HttpPut]
+        [Route("api/Activity/Save/{id}")]
+        public void Save([FromUri] int id)
+        {
+            activityProduct = obj.Activities.Find(id);
+            activityProduct.IsSaved = "true";
+            obj.SaveChanges();
+        }
+
+        [HttpGet]
+        [Route("api/Activity/GetSavedItems")]
+        public IEnumerable<Activity> GetSavedItems()
+        {
+            IEnumerable<Activity> enumerable = displayActivity();
+            List<Activity> activityItems = enumerable.ToList();
+            List<Activity> activitySavedItems = new List<Activity>();
+
+            for (int i = 0; i < activityItems.Count; i++)
             {
-                if (item.type == "book")
+                activityProduct = activityItems[i];
+                if (activityProduct.IsSaved == "true")
                 {
-                    var refobj = obj.Activities.Find(item.id);
-                    string IsBooked = obj.Activities.Find(item.id).IsBooked;
-                    IsBooked = "true";
-
-                    refobj.IsBooked = IsBooked;
-
-                    obj.SaveChanges();
-                }
-                else
-                {
-                    var refobj = obj.Activities.Find(item.id);
-                    string IsSaved = obj.Activities.Find(item.id).IsSaved;
-                    IsSaved = "true";
-
-                    refobj.IsSaved = IsSaved;
-
-                    obj.SaveChanges();
+                    activitySavedItems.Add(activityProduct);
                 }
             }
+            return activitySavedItems;
+        }
+
+
+        [HttpGet]
+        [Route("api/Activity/GetBookedItems")]
+        public IEnumerable<Activity> GetBookedItems()
+        {
+            IEnumerable<Activity> enumerable = displayActivity();
+            List<Activity> activityItems = enumerable.ToList();
+            List<Activity> activityBookedItems = new List<Activity>();
+
+            for (int i = 0; i < activityItems.Count; i++)
+            {
+                activityProduct = activityItems[0];
+                if (activityProduct.IsBooked == "true")
+                {
+                    activityBookedItems.Add(activityProduct);
+                }
+            }
+            return activityBookedItems;
         }
     }
 }

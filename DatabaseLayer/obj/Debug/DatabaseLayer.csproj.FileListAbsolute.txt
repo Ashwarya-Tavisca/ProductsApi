@@ -9,3 +9,14 @@ C:\Users\ajoshi\source\repos\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.c
 C:\Users\ajoshi\source\repos\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.csproj.CoreCompileInputs.cache
 C:\Users\ajoshi\source\repos\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.dll
 C:\Users\ajoshi\source\repos\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.pdb
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\bin\Debug\DatabaseLayer.dll.config
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\bin\Debug\DatabaseLayer.dll
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\bin\Debug\DatabaseLayer.pdb
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\bin\Debug\EntityFramework.dll
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\bin\Debug\EntityFramework.xml
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.csprojResolveAssemblyReference.cache
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.csproj.CoreCompileInputs.cache
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.dll
+C:\Users\ajoshi\Desktop\ProductsApi\DatabaseLayer\obj\Debug\DatabaseLayer.pdb

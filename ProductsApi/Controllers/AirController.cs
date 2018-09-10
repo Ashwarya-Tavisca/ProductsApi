@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer;
+using Newtonsoft.Json.Linq;
 using ProductsApi.Models;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,8 @@ namespace ProductsApi.Controllers
 {
     public class AirController : ApiController
     {
-
-       
+        ProductsTableEntities obj = new ProductsTableEntities();
+        Air airProduct = new Air();
         [HttpGet]
         public IEnumerable<Air> displayAir()
         {
@@ -24,47 +25,73 @@ namespace ProductsApi.Controllers
         }
 
         [HttpPost]
-        public void AddAirProduct([FromBody]Air airObject)
-
+        public void Post([FromBody]JObject jsonFormatInput)
         {
-            using (ProductsTableEntities productobject = new ProductsTableEntities())
-            {
-                var id = productobject.Airs.Max(product => product.ProductId);
-                int maximumid = Int32.Parse(id.ToString());
-                maximumid += 1;
-                airObject.ProductId = maximumid;
-                productobject.Airs.Add(airObject);
-                productobject.SaveChanges();
-            }
-
+          
+            obj.Airs.Add(jsonFormatInput.ToObject<Air>());
+            obj.SaveChanges();
         }
-       
+
         [HttpPut]
-        public void book([FromBody]Item item)
+        [Route("api/Air/Book/{id}")]
+        public void Book([FromUri] int id)
         {
-            using (ProductsTableEntities obj = new ProductsTableEntities())
+
+            airProduct = obj.Airs.Find(id);
+            airProduct.IsBooked = "true";
+            obj.SaveChanges();
+        }
+
+
+        [HttpPut]
+        [Route("api/Air/Save/{id}")]
+        public void Save([FromUri] int id)
+        {
+
+            airProduct = obj.Airs.Find(id);
+            airProduct.IsSaved = "true";
+            obj.SaveChanges();
+        }
+
+
+        [HttpGet]
+        [Route("api/Air/GetSavedItems")]
+        public IEnumerable<Air> GetSavedItems()
+        {
+            IEnumerable<Air> enumerable = displayAir();
+            List<Air> airItems = enumerable.ToList();
+            List<Air> airSavedItems = new List<Air>();
+
+            for (int i = 0; i < airItems.Count; i++)
             {
-                if (item.type == "book")
+                airProduct = airItems[i];
+                if (airProduct.IsSaved == "true")
                 {
-                    var refobj = obj.Airs.Find(item.id);
-                    string IsBooked = obj.Airs.Find(item.id).IsBooked;
-                    IsBooked = "true";
-
-                    refobj.IsBooked = IsBooked;
-
-                    obj.SaveChanges();
-                }
-                else
-                {
-                    var refobj = obj.Airs.Find(item.id);
-                    string IsSaved = obj.Airs.Find(item.id).IsSaved;
-                    IsSaved = "true";
-
-                    refobj.IsSaved = IsSaved;
-
-                    obj.SaveChanges();
+                    airSavedItems.Add(airProduct);
                 }
             }
+            return airSavedItems;
         }
+
+
+        [HttpGet]
+        [Route("api/Air/GetBookedItems")]
+        public IEnumerable<Air> GetBookedItems()
+        {
+            IEnumerable<Air> enumerable = displayAir();
+            List<Air> airItems = enumerable.ToList();
+            List<Air> airBookedItems = new List<Air>();
+
+            for (int i = 0; i < airItems.Count; i++)
+            {
+                airProduct = airItems[i];
+                if (airProduct.IsBooked == "true")
+                {
+                    airBookedItems.Add(airProduct);
+                }
+            }
+            return airBookedItems;
+        }
+        
     }
 }

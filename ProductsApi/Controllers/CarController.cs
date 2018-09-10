@@ -1,4 +1,5 @@
 ﻿using DatabaseLayer;
+using Newtonsoft.Json.Linq;
 using ProductsApi.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,9 @@ namespace ProductsApi.Controllers
 {
     public class CarController : ApiController
     {
+        ProductsTableEntities obj = new ProductsTableEntities();
+        Car carProduct = new Car();
+
         [HttpGet]
         public IEnumerable<Car> displayCar()
         {
@@ -21,49 +25,71 @@ namespace ProductsApi.Controllers
                 return obj.Cars.ToList();
             }
         }
-
         [HttpPost]
-        public void AddCarProduct([FromBody]Car carObject)
-
+        public void Post([FromBody]JObject jsonFormatInput)
         {
-            using (ProductsTableEntities productobject = new ProductsTableEntities())
-            {
-                var id = productobject.Cars.Max(product => product.ProductId);
-                int maximumid = Int32.Parse(id.ToString());
-                maximumid += 1;
-                carObject.ProductId = maximumid;
-                productobject.Cars.Add(carObject);
-                productobject.SaveChanges();
-            }
-
+            obj.Cars.Add(jsonFormatInput.ToObject<Car>());
+            obj.SaveChanges();
         }
 
         [HttpPut]
-        public void book([FromBody]Item item)
+        [Route("api/Car/Book/{id}")]
+        public void Book([FromUri] int id)
         {
-            using (ProductsTableEntities obj = new ProductsTableEntities())
+
+            carProduct = obj.Cars.Find(id);
+            carProduct.IsBooked = "true";
+            obj.SaveChanges();
+        }
+
+        [HttpPut]
+        [Route("api/Car/Save/{id}")]
+        public void Save([FromUri] int id)
+        {
+
+            carProduct = obj.Cars.Find(id);
+            carProduct.isSaved = "true";
+            obj.SaveChanges();
+        }
+
+        [HttpGet]
+        [Route("api/Car/GetSavedItems")]
+        public IEnumerable<Car> GetSavedItems()
+        {
+            IEnumerable<Car> enumerable = displayCar();
+            List<Car> carItems = enumerable.ToList();
+            List<Car> carSavedItems = new List<Car>();
+
+            for (int i = 0; i < carItems.Count; i++)
             {
-                if (item.type == "book")
+                carProduct = carItems[i];
+                if (carProduct.isSaved == "true")
                 {
-                    var refobj = obj.Cars.Find(item.id);
-                    string IsBooked = obj.Cars.Find(item.id).IsBooked;
-                    IsBooked = "true";
-
-                    refobj.IsBooked = IsBooked;
-
-                    obj.SaveChanges();
-                }
-                else
-                {
-                    var refobj = obj.Cars.Find(item.id);
-                    string isSaved = obj.Cars.Find(item.id).isSaved;
-                    isSaved = "true";
-
-                    refobj.isSaved = isSaved;
-
-                    obj.SaveChanges();
+                    carSavedItems.Add(carProduct);
                 }
             }
+            return carSavedItems;
         }
+
+
+        [HttpGet]
+        [Route("api/Car/GetBookedItems")]
+        public IEnumerable<Car> GetBookedItems()
+        {
+            IEnumerable<Car> enumerable = displayCar();
+            List<Car> carItems = enumerable.ToList();
+            List<Car> carBookedItems = new List<Car>();
+
+            for (int i = 0; i < carItems.Count; i++)
+            {
+                carProduct = carItems[i];
+                if (carProduct.IsBooked == "true")
+                {
+                    carBookedItems.Add(carProduct);
+                }
+            }
+            return carBookedItems;
+        }
+
     }
 }

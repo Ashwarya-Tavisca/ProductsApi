@@ -25,8 +25,6 @@
     <Property Name="IsBooked" Type="varchar" MaxLength="50" />
     <Property Name="IsSaved" Type="varchar" MaxLength="50" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'ProductsTable.dbo.Car' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Car">
     <Key>
       <PropertyRef Name="ProductId" />
@@ -52,15 +50,7 @@ warning 6002: The table/view 'ProductsTable.dbo.Car' does not have a primary key
   <EntityContainer Name="ProductsTableModelStoreContainer">
     <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Air" EntityType="Self.Air" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Car" EntityType="Self.Car" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Hotel" EntityType="Self.Hotel" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Car" EntityType="Self.Car" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Car].[ProductId] AS [ProductId], 
-    [Car].[Name] AS [Name], 
-    [Car].[Price] AS [Price], 
-    [Car].[IsBooked] AS [IsBooked], 
-    [Car].[isSaved] AS [isSaved]
-    FROM [dbo].[Car] AS [Car]</DefiningQuery>
-    </EntitySet>
   </EntityContainer>
 </Schema>
