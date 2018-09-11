@@ -36,9 +36,7 @@ namespace ProductUI.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string AirProductResponse = response.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     return JsonConvert.DeserializeObject<List<AirProduct>>(AirProductResponse);
 
                 }
@@ -65,9 +63,7 @@ namespace ProductUI.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string ProductResponse = response.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     return JsonConvert.DeserializeObject<List<AirProduct>>(ProductResponse);
 
                 }
@@ -100,18 +96,13 @@ namespace ProductUI.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string ProductResponse = response.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     JsonConvert.DeserializeObject<List<AirProduct>>(ProductResponse);
-
                 }
                 HttpResponseMessage response1 = client.GetAsync("/api/Air").Result;
                 if (response1.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string ProductResponse = response1.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     return JsonConvert.DeserializeObject<List<AirProduct>>(ProductResponse);
                 }
             }
@@ -151,18 +142,14 @@ namespace ProductUI.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string ProductResponse = response.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     JsonConvert.DeserializeObject<List<AirProduct>>(ProductResponse);
 
                 }
                 HttpResponseMessage response1 = client.GetAsync("/api/Air").Result;
                 if (response1.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string ProductResponse = response1.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     return JsonConvert.DeserializeObject<List<AirProduct>>(ProductResponse);
                 }
             }
@@ -189,9 +176,7 @@ namespace ProductUI.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string ProductResponse = response.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     return JsonConvert.DeserializeObject<List<AirProduct>>(ProductResponse);
                 }
             }
@@ -219,9 +204,7 @@ namespace ProductUI.Controllers
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //Storing the response details recieved from web api   
                     string ProductResponse = response.Content.ReadAsStringAsync().Result;
-                    //Deserializing the response recieved from web api and storing into the Employee list  
                     return JsonConvert.DeserializeObject<List<AirProduct>>(ProductResponse);
                 }
             }

@@ -1,11 +1,14 @@
-﻿@model IEnumerable<ProductUI.Models.ActivityProduct>
+﻿@model IEnumerable<ProductUI.Models.CarProduct>
 
 @{
-    ViewBag.Title = "GetSavedProds";
+    ViewBag.Title = "GetBookedProds";
 }
 
-<h2>GetSavedProds</h2>
+<h2>GetBookedProds</h2>
 
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -14,25 +17,19 @@
         <th>
             @Html.DisplayNameFor(model => model.Price)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ActivityType)
-        </th>
-       
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        
         <td>
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActivityType)
-        </td>
-        
+       
        
     </tr>
 }

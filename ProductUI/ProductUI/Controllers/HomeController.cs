@@ -16,8 +16,6 @@ namespace ProductUI.Controllers
         {
             return RedirectToAction("Index", "Admin");
         }
-
-        // GET: Default/Create
         public ActionResult User()
         {
             return RedirectToAction("Index", "User");

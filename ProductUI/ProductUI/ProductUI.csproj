@@ -145,13 +145,17 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AirController.cs" />
+    <Compile Include="Controllers\CarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotelController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ActivityProduct.cs" />
     <Compile Include="Models\AirProduct.cs" />
+    <Compile Include="Models\CarProduct.cs" />
+    <Compile Include="Models\HotelProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +209,18 @@
     <Content Include="Views\Air\GetSavedProds.cshtml" />
     <Content Include="Views\Air\OnBookClick.cshtml" />
     <Content Include="Views\Air\OnSaveClick.cshtml" />
+    <Content Include="Views\Car\GetCarProducts.cshtml" />
+    <Content Include="Views\Car\AddCarProduct.cshtml" />
+    <Content Include="Views\Car\GetBookedProds.cshtml" />
+    <Content Include="Views\Car\GetSavedProds.cshtml" />
+    <Content Include="Views\Car\OnBookClick.cshtml" />
+    <Content Include="Views\Car\OnSaveClick.cshtml" />
+    <Content Include="Views\Hotel\GetHotelProducts.cshtml" />
+    <Content Include="Views\Hotel\GetBookedProds.cshtml" />
+    <Content Include="Views\Hotel\AddHotelProduct.cshtml" />
+    <Content Include="Views\Hotel\GetSavedProds.cshtml" />
+    <Content Include="Views\Hotel\OnBookClick.cshtml" />
+    <Content Include="Views\Hotel\OnSaveClick.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

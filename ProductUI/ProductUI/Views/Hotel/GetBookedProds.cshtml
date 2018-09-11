@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ProductUI.Models.HotelProduct>
+
+@{
+    ViewBag.Title = "GetBookedProds";
+}
+
+<h2>GetBookedProds</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+    
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfAvailableRooms)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomPrice)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfAvailableRooms)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomPrice)
+        </td>
+      
+    </tr>
+}
+
+</table>
